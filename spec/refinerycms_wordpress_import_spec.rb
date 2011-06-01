@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Refinerycms-wordpress-import do
+describe Refinery::WordPress do
   it "should be valid" do
-    Refinerycms-wordpress-import.should be_a(Module)
+    Refinery::WordPress.should be_a(Module)
   end
 end
