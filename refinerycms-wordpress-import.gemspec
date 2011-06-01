@@ -9,4 +9,5 @@ Gem::Specification.new do |s|
   
   s.add_dependency 'refinerycms', '~> 1.0.0'
   s.add_dependency 'refinerycms-blog', '~> 1.3.2'
+  s.add_dependency 'nokogiri', '~> 1.4.4'
 end
