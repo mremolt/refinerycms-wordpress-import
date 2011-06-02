@@ -1,3 +1,29 @@
 = Refinerycms-wordpress-import
 
-This project rocks and uses MIT-LICENSE.
+This project ist an importer for WordPress XML dumps into refinerycms(-blog). 
+
+So far, only blog-relevant data gets imported, I'm working on the cms pages part. 
+
+== Installation
+
+As there is no official release out yet, just add this repos to your projects Gemfile:
+
+<pre>
+gem 'refinerycms-wordpress-import', :git => 'git://github.com/mremolt/refinerycms-wordpress-import.git'
+</pre>
+
+== Usage
+
+There are 3 rake tasks
+
+* wordpress:reset_blog - This one basically deletes all data from blog relevant tables (taggings, tags, blog_comments, blog_categories, blog_posts). Use this one first, if you want a clean import of your old blog. 
+* wordpress:import_blog[file_name] - This one does all the heavy work of parsing the dump and importing the data into refinery tables. The param is a path to the dump file.
+* wordpress:reset_and_import_blog[file_name] - This one combines the two previous tasks.
+
+== Feedback
+
+This is a very new gem. It manages to import my own blog and a standard WordPress 3.1 dump with some sample data. 
+
+If you want to help make it more stable, please throw your own WP dumps against it and see what happens. If you encounter any bugs, please file a bug report with a sample dump that breaks this gem. 
+
+For extra karma, fork it, fix it yourself and send a pull request! ;-)
