@@ -8,9 +8,7 @@ So far, only blog-relevant data gets imported, I'm working on the cms pages part
 
 As there is no official release out yet, just add this repos to your projects Gemfile:
 
-<pre>
-gem 'refinerycms-wordpress-import', :git => 'git://github.com/mremolt/refinerycms-wordpress-import.git'
-</pre>
+  gem 'refinerycms-wordpress-import', :git => 'git://github.com/mremolt/refinerycms-wordpress-import.git'
 
 == Usage
 
