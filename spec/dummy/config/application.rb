@@ -1,13 +1,8 @@
 require File.expand_path('../boot', __FILE__)
 
-require "active_model/railtie"
-require "active_record/railtie"
-require "action_controller/railtie"
-require "action_view/railtie"
-require "action_mailer/railtie"
+require 'rails/all'
 
 Bundler.require
-require "refinerycms_wordpress_import"
 
 module Dummy
   class Application < Rails::Application

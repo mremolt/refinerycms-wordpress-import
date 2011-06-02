@@ -6,5 +6,3 @@ if File.exist?(gemfile)
   require 'bundler'
   Bundler.setup
 end
-
-$:.unshift File.expand_path('../../../../lib', __FILE__)

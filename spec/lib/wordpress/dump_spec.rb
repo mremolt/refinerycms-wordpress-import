@@ -1,12 +1,11 @@
 require 'spec_helper'
-require 'wordpress'
 
-describe WordPress::Dump, :type => :model do
+describe Refinery::WordPress::Dump, :type => :model do
   let(:file_name) { File.realpath(File.join(File.dirname(__FILE__), '../../fixtures/wordpress_dump.xml')) }
-  let(:dump) { WordPress::Dump.new(file_name) }
+  let(:dump) { Refinery::WordPress::Dump.new(file_name) }
 
   it "should create a Dump object given a xml file" do
-    dump.should be_a WordPress::Dump
+    dump.should be_a Refinery::WordPress::Dump
   end
 
   it "should include a Nokogiri::XML object" do
@@ -15,8 +14,8 @@ describe WordPress::Dump, :type => :model do
 
   describe "#tags" do
     let(:tags) do
-      [ WordPress::Tag.new('css'), WordPress::Tag.new('html'),
-        WordPress::Tag.new('php'), WordPress::Tag.new('ruby')]
+      [ Refinery::WordPress::Tag.new('css'), Refinery::WordPress::Tag.new('html'),
+        Refinery::WordPress::Tag.new('php'), Refinery::WordPress::Tag.new('ruby')]
     end
 
     it "should return all included tags" do
@@ -34,7 +33,7 @@ describe WordPress::Dump, :type => :model do
         end
 
         it "should create a ActsAsTaggableOn::Tag" do
-          ActsAsTaggableOn::Tag.should have(1).record
+          ::ActsAsTaggableOn::Tag.should have(1).record
         end
 
         it "should copy the name over to the Tag object" do
@@ -46,8 +45,8 @@ describe WordPress::Dump, :type => :model do
 
   describe "#categories" do
     let(:categories) do
-      [ WordPress::Category.new('Rant'), WordPress::Category.new('Tutorials'),
-       WordPress::Category.new('Uncategorized') ]
+      [ Refinery::WordPress::Category.new('Rant'), Refinery::WordPress::Category.new('Tutorials'),
+       Refinery::WordPress::Category.new('Uncategorized') ]
     end
 
     it "should return all included categories" do
@@ -108,7 +107,7 @@ describe WordPress::Dump, :type => :model do
           Page.should have(@count + 1).record
         end
 
-        it "should copy the attributes from WordPress::Page" do
+        it "should copy the attributes from Refinery::WordPress::Page" do
           @page.title.should == page.title
           @page.draft.should == page.draft?
           @page.created_at.should == page.post_date
@@ -143,7 +142,7 @@ describe WordPress::Dump, :type => :model do
           @user.should be_persisted
         end
 
-        it "should have copied the attributes from WordPress::Author" do
+        it "should have copied the attributes from Refinery::WordPress::Author" do
           author.login.should == @user.username
           author.email.should == @user.email
         end
@@ -172,15 +171,15 @@ describe WordPress::Dump, :type => :model do
       
       describe "#categories" do
         it { post.categories.should have(1).category }
-        it { post.categories.first.should == WordPress::Category.new('Rant') }
+        it { post.categories.first.should == Refinery::WordPress::Category.new('Rant') }
       end
 
       describe "#tags" do
         it { post.tags.should have(3).tags }
 
-        it { post.tags.should include(WordPress::Tag.new('css')) }
-        it { post.tags.should include(WordPress::Tag.new('html')) }
-        it { post.tags.should include(WordPress::Tag.new('php')) }
+        it { post.tags.should include(Refinery::WordPress::Tag.new('css')) }
+        it { post.tags.should include(Refinery::WordPress::Tag.new('html')) }
+        it { post.tags.should include(Refinery::WordPress::Tag.new('php')) }
       end
 
       it { post.tag_list.should == 'css,html,php' }
@@ -212,7 +211,7 @@ describe WordPress::Dump, :type => :model do
               @comment.should be_new_record
             end
 
-            it "should copy the attributes from WordPress::Comment" do
+            it "should copy the attributes from Refinery::WordPress::Comment" do
               @comment.name.should == comment.author
               @comment.email.should == comment.email
               @comment.body.should == comment.content
@@ -233,7 +232,7 @@ describe WordPress::Dump, :type => :model do
 
         it { BlogPost.should have(1).record } 
 
-        it "should copy the attributes from WordPress::Page" do
+        it "should copy the attributes from Refinery::WordPress::Page" do
           @post.title.should == post.title
           @post.body.should == post.content
           @post.draft.should == post.draft?
@@ -242,11 +241,11 @@ describe WordPress::Dump, :type => :model do
           @post.author.username.should == post.creator
         end
 
-        it "should assign a category for each WordPress::Category" do
+        it "should assign a category for each Refinery::WordPress::Category" do
           @post.categories.should have(post.categories.count).records
         end
 
-        it "should assign a comment for each WordPress::Comment" do
+        it "should assign a comment for each Refinery::WordPress::Comment" do
           @post.comments.should have(post.comments.count).records
         end
 

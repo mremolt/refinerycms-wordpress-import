@@ -4,7 +4,7 @@ PATH
     refinerycms-wordpress-import (0.0.1)
       nokogiri (~> 1.4.4)
       refinerycms (~> 1.0.0)
-      refinerycms-blog (~> 1.3.2)
+      refinerycms-blog (~> 1.5.2)
 
 GEM
   remote: http://rubygems.org/
@@ -36,6 +36,7 @@ GEM
       activemodel (= 3.0.7)
       activesupport (= 3.0.7)
     activesupport (3.0.7)
+    acts-as-taggable-on (2.0.6)
     acts_as_indexed (0.7.2)
     arel (2.0.10)
     awesome_nested_set (2.0.0)
@@ -43,6 +44,7 @@ GEM
     babosa (0.3.4)
     bcrypt-ruby (2.1.4)
     builder (2.1.2)
+    database_cleaner (0.6.7)
     devise (1.3.4)
       bcrypt-ruby (~> 2.1.2)
       orm_adapter (~> 0.0.3)
@@ -104,9 +106,11 @@ GEM
       friendly_id_globalize3 (~> 3.2.1)
       refinerycms-core (= 1.0.0)
     refinerycms-base (1.0.0)
-    refinerycms-blog (1.3.2)
+    refinerycms-blog (1.5.2)
+      acts-as-taggable-on
       filters_spam (~> 0.2)
-      refinerycms (>= 0.9.8)
+      refinerycms-core (~> 1.0.0)
+      seo_meta (~> 1.1.0)
     refinerycms-core (1.0.0)
       acts_as_indexed (~> 0.7)
       awesome_nested_set (~> 2.0)
@@ -166,7 +170,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  database_cleaner
   rails (= 3.0.7)
+  refinerycms
+  refinerycms-blog
   refinerycms-wordpress-import!
   rspec-rails (>= 2.6.0)
   sqlite3
