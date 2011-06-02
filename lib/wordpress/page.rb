@@ -24,10 +24,10 @@ module Refinery
 
       def content_formatted
         # WordPress doesn't export <p>-Tags, so let's run a simple_format over
-        # the content
-        formatted = simple_format(content)
+        # the content. As we trust ourselves, no sanatize.
+        formatted = simple_format(content, {}, { :sanitize => false })
 
-        # Support for SyntaxHighlighter:
+        # Support for SyntaxHighlighter (http://alexgorbatchev.com/SyntaxHighlighter/):
         # In WordPress you can (via a plugin) enclose code in [lang][/lang]
         # blocks, which are converted to a <pre>-tag with a class corresponding
         # to the language.

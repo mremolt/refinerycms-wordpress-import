@@ -2,7 +2,14 @@ module Refinery
   module WordPress
     class Post < Page
       def tags
-        node.xpath("category[@domain='post_tag']").collect do |tag_node| 
+        # xml dump has "post_tag" for wordpress 3.1 and "tag" for 3.0
+        path = if node.xpath("category[@domain='post_tag']").count > 0
+          "category[@domain='post_tag']"
+        else
+          "category[@domain='tag']"
+        end
+
+        node.xpath(path).collect do |tag_node| 
           Tag.new(tag_node.text)
         end
       end
@@ -24,12 +31,9 @@ module Refinery
       end
 
       def to_refinery
-        user = ::User.find_by_username creator
+        user = ::User.find_by_username(creator) || ::User.first
         raise "Referenced User doesn't exist! Make sure the authors are imported first." \
           unless user
-
-        post = BlogPost.new
-        
 
         post = ::BlogPost.create! :title => title, :body => content_formatted, :draft => draft?, 
           :published_at => post_date, :created_at => post_date, :author => user,

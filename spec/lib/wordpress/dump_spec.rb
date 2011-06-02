@@ -235,9 +235,9 @@ describe Refinery::WordPress::Dump, :type => :model do
 
         it { BlogPost.should have(1).record } 
 
-        it "should copy the attributes from Refinery::WordPress::Page" do
+        it "should copy the attributes from Refinery::WordPress::Post" do
           @post.title.should == post.title
-          @post.body.should == post.content
+          @post.body.should == post.content_formatted
           @post.draft.should == post.draft?
           @post.published_at.should == post.post_date
           @post.created_at.should == post.post_date
