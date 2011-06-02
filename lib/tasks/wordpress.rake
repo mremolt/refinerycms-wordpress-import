@@ -5,7 +5,7 @@ namespace :wordpress do
   task :reset_blog do
     Rake::Task["environment"].invoke
 
-    %w(taggings tags blog_comments blog_categories blog_posts).each do |table_name|
+    %w(taggings tags blog_comments blog_categories blog_categories_blog_posts blog_posts).each do |table_name|
       p "Truncating #{table_name} ..."
       ActiveRecord::Base.connection.execute "DELETE FROM #{table_name}"
     end
