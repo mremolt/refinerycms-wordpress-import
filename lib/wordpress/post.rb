@@ -31,7 +31,7 @@ module Refinery
         post = BlogPost.new
         
 
-        post = ::BlogPost.create! :title => title, :body => content, :draft => draft?, 
+        post = ::BlogPost.create! :title => title, :body => content_formatted, :draft => draft?, 
           :published_at => post_date, :created_at => post_date, :author => user,
           :tag_list => tag_list
 

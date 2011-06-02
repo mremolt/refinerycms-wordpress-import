@@ -94,6 +94,9 @@ describe Refinery::WordPress::Dump, :type => :model do
       it { page.should_not == dump.pages.first }
 
       describe "#to_refinery" do
+        include ::ActionView::Helpers::TagHelper
+        include ::ActionView::Helpers::TextHelper
+
         before do
           # "About me" has a parent page with id 8 in the XML  dump, 
           # would otherwise fails creation
@@ -111,7 +114,7 @@ describe Refinery::WordPress::Dump, :type => :model do
           @page.title.should == page.title
           @page.draft.should == page.draft?
           @page.created_at.should == page.post_date
-          @page.parts.first.body.should == "<p>#{page.content}</p>"
+          @page.parts.first.body.should == "#{simple_format(page.content)}"
         end
       end
     end
