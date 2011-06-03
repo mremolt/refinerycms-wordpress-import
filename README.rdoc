@@ -14,7 +14,11 @@ the site is running, all migrations are run and you created the first refinery u
 
 == Installation
 
-As there is no official release out yet, just add this repos to your projects Gemfile:
+Just add the gem to your projects Gemfile:
+
+  gem 'refinerycms-wordpress-import'
+
+Or if you want to stay on the bleeding edge: 
 
   gem 'refinerycms-wordpress-import', :git => 'git://github.com/mremolt/refinerycms-wordpress-import.git'
 
