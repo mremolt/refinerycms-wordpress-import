@@ -4,6 +4,8 @@ This litte project is an importer for WordPress XML dumps into refinerycms(-blog
 
 So far, only blog-relevant data gets imported, I'm working on the cms pages part. 
 
+You can find the source code on github: https://github.com/mremolt/refinerycms-wordpress-import
+
 == Prerequisites
 
 As refinerycms-wordpress-import is an addon for RefineryCMS, is shares the prerequisites with it.
