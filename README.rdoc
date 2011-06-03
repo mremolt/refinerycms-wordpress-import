@@ -53,6 +53,15 @@ The task will then skip all posts that are not published.
 
 This one combines the two previous tasks. 
 
+One more hint for users of zsh (like myself): 
+
+The square brackets following the rake task need to be escaped on zsh, as they have a 
+special meaning there. So the syntax is:
+
+  rake wordpress:reset_and_import_blog\[file_name\]
+
+Ugly, but it works. This is the case for all rake tasks by the way, not just mine. 
+
 == Feedback
 
 This is still a very new gem. It manages to import my own blog and a standard WordPress 3.1 dump with some sample posts. 
