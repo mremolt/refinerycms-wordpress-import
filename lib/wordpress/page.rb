@@ -25,7 +25,7 @@ module Refinery
       def content_formatted
         # WordPress doesn't export <p>-Tags, so let's run a simple_format over
         # the content. As we trust ourselves, no sanatize.
-        formatted = simple_format(content, {}, { :sanitize => false })
+        formatted = simple_format(content)
 
         # Support for SyntaxHighlighter (http://alexgorbatchev.com/SyntaxHighlighter/):
         # In WordPress you can (via a plugin) enclose code in [lang][/lang]
@@ -35,8 +35,8 @@ module Refinery
         # Example:
         # [ruby]p "Hello World"[/ruby] 
         # -> <pre class="brush: ruby">p "Hello world"</pre> 
-        formatted.gsub!(/\[(\w+)\]/, '<pre class="brush: \1">')
-        formatted.gsub!(/\[\/\w+\]/, '</pre>')
+        formatted.gsub!(/\[(\w+)\](.+?)\[\/\1\]/m, '<pre class="brush: \1">\2</pre>')
+        #formatted.gsub!(/\[\/\w+\]/, '</pre>')
 
         # remove all tags inside <pre> that simple_format created
         # TODO: replace simple_format with a method, that ignores pre-tags
@@ -85,6 +85,20 @@ module Refinery
 
         page.parts.create(:title => 'Body', :body => content_formatted)
         page
+      end
+
+      private 
+
+      def simple_format(text, html_options={})
+        text = ''.html_safe if text.nil?
+        start_tag = tag('p', html_options, true)
+        
+        text.gsub!(/\r\n?/, "\n")                    # \r\n and \r -> \n
+        text.gsub!(/\n\n+/, "</p>\n\n#{start_tag}")  # 2+ newline  -> paragraph
+        #text.gsub!(/([^\n]\n)(?=[^\n])/, '\1<br />') # 1 newline   -> br
+        text.insert 0, start_tag
+
+        text.html_safe.safe_concat("</p>")
       end
     end
   end
