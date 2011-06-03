@@ -71,6 +71,10 @@ module Refinery
         status != 'publish'
       end
 
+      def published?
+        ! draft?
+      end
+
       def ==(other)
         post_id == other.post_id
       end

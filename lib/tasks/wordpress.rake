@@ -18,11 +18,13 @@ namespace :wordpress do
     dump = Refinery::WordPress::Dump.new(params[:file_name])
 
     dump.authors.each(&:to_refinery)
-    dump.posts.each(&:to_refinery)
+    
+    only_published = ENV['ONLY_PUBLISHED'] == 'true' ? true : false
+    dump.posts(only_published).each(&:to_refinery)
 
     ENV["MODEL"] = 'BlogPost'
     Rake::Task["friendly_id:redo_slugs"].invoke
-    ENV["MODEL"] = nil
+    ENV.delete("MODEL")
   end
 
 

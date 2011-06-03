@@ -25,10 +25,12 @@ module Refinery
         end
       end
 
-      def posts
-        doc.xpath("//item[wp:post_type = 'post']").collect do |post|
+      def posts(only_published=false)
+        posts = doc.xpath("//item[wp:post_type = 'post']").collect do |post|
           Post.new(post)
         end
+        posts = posts.select(&:published?) if only_published
+        posts
       end
 
       def tags

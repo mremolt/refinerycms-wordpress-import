@@ -1,10 +1,14 @@
 = Refinerycms-wordpress-import
 
-This project is an importer for WordPress XML dumps into refinerycms(-blog). 
+This litte project is an importer for WordPress XML dumps into refinerycms(-blog). 
 
 So far, only blog-relevant data gets imported, I'm working on the cms pages part. 
 
-Draft posts and posts with duplicate post titles are ignored (for now)
+== Prerequisites
+
+As refinerycms-wordpress-import is an addon for RefineryCMS, is shares the prerequisites with it.
+So you'll first need a running installation of refinerycms and refinerycms-blog. Make sure
+the site is running, all migrations are run and you created the first refinery user. 
 
 == Installation
 
@@ -12,18 +16,44 @@ As there is no official release out yet, just add this repos to your projects Ge
 
   gem 'refinerycms-wordpress-import', :git => 'git://github.com/mremolt/refinerycms-wordpress-import.git'
 
+and run
+
+  bundle
+
 == Usage
 
-There are 3 rake tasks
+Importing the XML dump is done via 3 rake tasks:
 
-* wordpress:reset_blog - This one basically deletes all data from blog relevant tables (taggings, tags, blog_comments, blog_categories, blog_posts). Use this one first, if you want a clean import of your old blog. 
-* wordpress:import_blog[file_name] - This one does all the heavy work of parsing the dump and importing the data into refinery tables. The param is a path to the dump file.
-* wordpress:reset_and_import_blog[file_name] - This one combines the two previous tasks.
+  rake wordpress:reset_blog 
+
+This one basically deletes all data from blog relevant tables (taggings, tags, blog_comments, 
+blog_categories, blog_posts, blog_categories_blog_posts). 
+Use this one first, if you want a clean import of your old blog. 
+
+  rake wordpress:import_blog[file_name] 
+
+This one does all the heavy work of parsing the dump and importing the data into refinery tables. 
+The parameter is the path to the dump file. Got a report from a Mac user, that the ~
+didn't work in the path. I'll have a look at it, but till then, don't use it please. 
+
+If you don't want to import draft posts, you can set the ENV variable ONLY_PUBLISHED to true:
+
+
+  rake wordpress:import_blog[file_name] ONLY_PUBLISHED=true
+
+The task will then skip all posts that are not published.
+
+  rake wordpress:reset_and_import_blog[file_name]
+
+This one combines the two previous tasks. 
 
 == Feedback
 
-This is a very new gem. It manages to import my own blog and a standard WordPress 3.1 dump with some sample data. 
+This is still a very new gem. It manages to import my own blog and a standard WordPress 3.1 dump with some sample posts. 
+The first feedback is quite good, so it seems, the gem doesn't eat the machines it is installed on. 
 
-If you want to help make it more stable, please throw your own WP dumps against it and see what happens. If you encounter any bugs, please file a bug report with a sample dump that breaks this gem. 
+If you want to help make it even more stable, please throw your own WP dumps against it 
+and see what happens. If you encounter any bugs, please file a bug report here on github.
+A sample dump that breaks this gem would be really helpful in that case. 
 
 For extra karma, fork it, fix it yourself and send a pull request! ;-)

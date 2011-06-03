@@ -36,24 +36,20 @@ module Refinery
           unless user
         
         begin
-          unless draft?
-            #p "creating post " + title + " Draft status: " + draft?.to_s
-            
-            post = ::BlogPost.new :title => title, :body => content_formatted, 
-              :draft => draft?, :published_at => post_date, :created_at => post_date, 
-              :author => user, :tag_list => tag_list
-            post.save!
+          post = ::BlogPost.new :title => title, :body => content_formatted, 
+            :draft => draft?, :published_at => post_date, :created_at => post_date, 
+            :author => user, :tag_list => tag_list
+          post.save!
 
-            ::BlogPost.transaction do
-              categories.each do |category|
-                post.categories << category.to_refinery
-              end
+          ::BlogPost.transaction do
+            categories.each do |category|
+              post.categories << category.to_refinery
+            end
 
-              comments.each do |comment|
-                comment = comment.to_refinery
-                comment.post = post
-                comment.save
-              end
+            comments.each do |comment|
+              comment = comment.to_refinery
+              comment.post = post
+              comment.save
             end
           end
         rescue ActiveRecord::RecordInvalid 
