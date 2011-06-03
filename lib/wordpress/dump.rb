@@ -19,10 +19,13 @@ module Refinery
         end
       end
 
-      def pages
-        doc.xpath("//item[wp:post_type = 'page']").collect do |page|
+      def pages(only_published=false)
+        pages = doc.xpath("//item[wp:post_type = 'page']").collect do |page|
           Page.new(page)
         end
+
+        pages = pages.select(&:published?) if only_published
+        pages
       end
 
       def posts(only_published=false)

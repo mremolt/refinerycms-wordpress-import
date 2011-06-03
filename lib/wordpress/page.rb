@@ -36,7 +36,6 @@ module Refinery
         # [ruby]p "Hello World"[/ruby] 
         # -> <pre class="brush: ruby">p "Hello world"</pre> 
         formatted.gsub!(/\[(\w+)\](.+?)\[\/\1\]/m, '<pre class="brush: \1">\2</pre>')
-        #formatted.gsub!(/\[\/\w+\]/, '</pre>')
 
         # remove all tags inside <pre> that simple_format created
         # TODO: replace simple_format with a method, that ignores pre-tags
@@ -60,7 +59,8 @@ module Refinery
       end
 
       def parent_id
-        node.xpath("wp:post_parent").text.to_i
+        dump_id = node.xpath("wp:post_parent").text.to_i
+        dump_id == 0 ? nil : dump_id
       end
 
       def status
@@ -80,8 +80,8 @@ module Refinery
       end
 
       def to_refinery
-        page = ::Page.create!(:title => title, :created_at => post_date, 
-                              :draft => draft?, :parent_id => parent_id)
+        page = ::Page.create!(:id => post_id, :title => title, 
+          :created_at => post_date, :draft => draft?)
 
         page.parts.create(:title => 'Body', :body => content_formatted)
         page
@@ -95,7 +95,6 @@ module Refinery
         
         text.gsub!(/\r\n?/, "\n")                    # \r\n and \r -> \n
         text.gsub!(/\n\n+/, "</p>\n\n#{start_tag}")  # 2+ newline  -> paragraph
-        #text.gsub!(/([^\n]\n)(?=[^\n])/, '\1<br />') # 1 newline   -> br
         text.insert 0, start_tag
 
         text.html_safe.safe_concat("</p>")

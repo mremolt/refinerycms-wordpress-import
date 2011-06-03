@@ -61,6 +61,25 @@ module Refinery
 
         post
       end
+
+      def self.create_blog_page_if_necessary
+        # refinerycms wants a page at /blog, so let's make sure there is one
+        # taken from the original db seeds from refinery-blog
+        unless ::Page.where("link_url = ?", '/blog').exists?
+          page = ::Page.create(
+            :title => "Blog",
+            :link_url => "/blog",
+            :deletable => false,
+            :position => ((::Page.maximum(:position, :conditions => {:parent_id => nil}) || -1)+1),
+            :menu_match => "^/blogs?(\/|\/.+?|)$"
+          )
+
+          ::Page.default_parts.each do |default_page_part|
+            page.parts.create(:title => default_page_part, :body => nil)
+          end
+        end
+      end
+
     end
   end
 end
