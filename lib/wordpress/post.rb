@@ -36,16 +36,14 @@ module Refinery
           unless user
         
         begin
-          is_draft = draft? ? "true" : "false"
-          if !draft?
-            p "creating post " + title + " Draft status: " + is_draft
-            post = ::BlogPost.create! :title => title,
-                                      :body => content_formatted,
-                                      :draft => draft?,
-                                      :published_at => post_date,
-                                      :created_at => post_date,
-                                      :author => user,
-                                      :tag_list => tag_list
+          unless draft?
+            #p "creating post " + title + " Draft status: " + draft?.to_s
+            
+            post = ::BlogPost.new :title => title, :body => content_formatted, 
+              :draft => draft?, :published_at => post_date, :created_at => post_date, 
+              :author => user, :tag_list => tag_list
+            post.save!
+
             ::BlogPost.transaction do
               categories.each do |category|
                 post.categories << category.to_refinery
@@ -57,13 +55,12 @@ module Refinery
                 comment.save
               end
             end
-            
-          else
-            p "Skipping draft post"
           end
-        rescue Exception => e
-          # TODO if it's not an activerecord validation error about duplicate title then raise e
-          p e
+        rescue ActiveRecord::RecordInvalid 
+          # if the title has already been taken (WP allows duplicates here,
+          # refinery doesn't) append the post_id to it, making it unique
+          post.title = "#{title}-#{post_id}"
+          post.save
         end
 
         post

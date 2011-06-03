@@ -227,29 +227,49 @@ describe Refinery::WordPress::Dump, :type => :model do
 
       describe "#to_refinery" do
         before do
-          User.create! :username => 'admin', :email => 'admin@example.com',
+          @user = User.create! :username => 'admin', :email => 'admin@example.com',
             :password => 'password', :password_confirmation => 'password'
-
-          @post = post.to_refinery
         end
 
-        it { BlogPost.should have(1).record } 
 
-        it "should copy the attributes from Refinery::WordPress::Post" do
-          @post.title.should == post.title
-          @post.body.should == post.content_formatted
-          @post.draft.should == post.draft?
-          @post.published_at.should == post.post_date
-          @post.created_at.should == post.post_date
-          @post.author.username.should == post.creator
+        context "with a unique title" do
+          before do 
+            @post = post.to_refinery
+          end
+
+          it { BlogPost.should have(1).record } 
+
+          it "should copy the attributes from Refinery::WordPress::Post" do
+            @post.title.should == post.title
+            @post.body.should == post.content_formatted
+            @post.draft.should == post.draft?
+            @post.published_at.should == post.post_date
+            @post.created_at.should == post.post_date
+            @post.author.username.should == post.creator
+          end
+
+          it "should assign a category for each Refinery::WordPress::Category" do
+            @post.categories.should have(post.categories.count).records
+          end
+
+          it "should assign a comment for each Refinery::WordPress::Comment" do
+            @post.comments.should have(post.comments.count).records
+          end
         end
 
-        it "should assign a category for each Refinery::WordPress::Category" do
-          @post.categories.should have(post.categories.count).records
-        end
+        context "with a duplicate title" do
+          before do
+            BlogPost.create! :title => post.title, :body => 'Lorem', :author => @user
+            @post = post.to_refinery
 
-        it "should assign a comment for each Refinery::WordPress::Comment" do
-          @post.comments.should have(post.comments.count).records
+          end
+
+          it { BlogPost.should have(2).records } 
+
+          it "should create the BlogPost with #post_id attached" do
+            @post.title.should == "#{post.title}-#{post.post_id}"
+          end
+
         end
 
       end
