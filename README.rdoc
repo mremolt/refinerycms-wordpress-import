@@ -1,8 +1,10 @@
 = Refinerycms-wordpress-import
 
-This project ist an importer for WordPress XML dumps into refinerycms(-blog). 
+This project is an importer for WordPress XML dumps into refinerycms(-blog). 
 
 So far, only blog-relevant data gets imported, I'm working on the cms pages part. 
+
+Draft posts and posts with duplicate post titles are ignored (for now)
 
 == Installation
 

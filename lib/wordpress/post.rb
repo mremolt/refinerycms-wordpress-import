@@ -34,21 +34,36 @@ module Refinery
         user = ::User.find_by_username(creator) || ::User.first
         raise "Referenced User doesn't exist! Make sure the authors are imported first." \
           unless user
+        
+        begin
+          is_draft = draft? ? "true" : "false"
+          if !draft?
+            p "creating post " + title + " Draft status: " + is_draft
+            post = ::BlogPost.create! :title => title,
+                                      :body => content_formatted,
+                                      :draft => draft?,
+                                      :published_at => post_date,
+                                      :created_at => post_date,
+                                      :author => user,
+                                      :tag_list => tag_list
+            ::BlogPost.transaction do
+              categories.each do |category|
+                post.categories << category.to_refinery
+              end
 
-        post = ::BlogPost.create! :title => title, :body => content_formatted, :draft => draft?, 
-          :published_at => post_date, :created_at => post_date, :author => user,
-          :tag_list => tag_list
-
-        ::BlogPost.transaction do
-          categories.each do |category|
-            post.categories << category.to_refinery
+              comments.each do |comment|
+                comment = comment.to_refinery
+                comment.post = post
+                comment.save
+              end
+            end
+            
+          else
+            p "Skipping draft post"
           end
-          
-          comments.each do |comment|
-            comment = comment.to_refinery
-            comment.post = post
-            comment.save
-          end
+        rescue Exception => e
+          # TODO if it's not an activerecord validation error about duplicate title then raise e
+          p e
         end
 
         post
