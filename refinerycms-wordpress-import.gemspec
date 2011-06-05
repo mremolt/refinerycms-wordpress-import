@@ -3,9 +3,9 @@
 Gem::Specification.new do |s|
   s.name        = "refinerycms-wordpress-import"
   s.summary     = "Import WordPress XML dumps into refinerycms(-blog)."
-  s.description = "This gem imports a WordPress XML dump into refinerycms (Page [soon], User) and refinerycms-blog (BlogPost, BlogCategory, Tag, BlogComment)"
-  s.version     = "0.1.0"
-  s.date        = "2011-06-03"
+  s.description = "This gem imports a WordPress XML dump into refinerycms (Page, User) and refinerycms-blog (BlogPost, BlogCategory, Tag, BlogComment)"
+  s.version     = "0.2.0"
+  s.date        = "2011-06-05"
 
   s.authors     = ['Marc Remolt']
   s.email       = 'marc.remolt@googlemail.com'
