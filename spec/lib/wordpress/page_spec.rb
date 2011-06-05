@@ -5,15 +5,15 @@ describe Refinery::WordPress::Page, :type => :model do
 
   let(:page) { test_dump.pages.last }
 
-  it { page.title.should == 'About me' }
-  it { page.content.should include('Lorem ipsum dolor sit') }
-  it { page.creator.should == 'admin' }
-  it { page.post_date.should == DateTime.new(2011, 5, 21, 12, 25, 42) }
-  it { page.post_id.should == 10 }
-  it { page.parent_id.should == 8 }
+   specify { page.title.should == 'About me' }
+   specify { page.content.should include('Lorem ipsum dolor sit') }
+   specify { page.creator.should == 'admin' }
+   specify { page.post_date.should == DateTime.new(2011, 5, 21, 12, 25, 42) }
+   specify { page.post_id.should == 10 }
+   specify { page.parent_id.should == 8 }
 
-  it { page.should == dump.pages.last }
-  it { page.should_not == dump.pages.first }
+   specify { page.should == dump.pages.last }
+   specify { page.should_not == dump.pages.first }
 
   describe "#to_refinery" do
     include ::ActionView::Helpers::TagHelper

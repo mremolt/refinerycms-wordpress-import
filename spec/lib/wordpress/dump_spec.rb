@@ -18,6 +18,7 @@ describe Refinery::WordPress::Dump, :type => :model do
     end
 
     specify { dump.tags.count == 4 }
+    specify { dump.tags.first.should be_a(Refinery::WordPress::Tag) }
 
     it "should return all included tags" do
       tags.each do |tag|
@@ -33,6 +34,7 @@ describe Refinery::WordPress::Dump, :type => :model do
     end
 
     specify { dump.categories.count == 4 }
+    specify { dump.categories.first.should be_a(Refinery::WordPress::Category) }
 
     it "should return all included categories" do
       categories.each do |cat|
@@ -46,6 +48,8 @@ describe Refinery::WordPress::Dump, :type => :model do
       dump.pages.should have(3).pages
     end
 
+    specify { dump.pages.first.should be_a(Refinery::WordPress::Page) }
+
     it "should return only published pages with only_published=true" do
       dump.pages(true).should have(2).pages
     end
@@ -55,12 +59,16 @@ describe Refinery::WordPress::Dump, :type => :model do
     it "should return all authors" do
       dump.authors.should have(1).author
     end
+
+    specify { dump.authors.first.should be_a(Refinery::WordPress::Author) }
   end
 
   describe "#posts" do
     it "should return all posts" do
       dump.posts.should have(3).posts
     end
+
+    specify { dump.posts.first.should be_a(Refinery::WordPress::Post) }
 
     it "should return only published posts with only_published=true" do
       dump.posts(true).should have(2).posts
@@ -71,5 +79,7 @@ describe Refinery::WordPress::Dump, :type => :model do
     it "should return all attachments" do
       dump.attachments.should have(1).attachment
     end
+
+    specify { dump.attachments.first.should be_a(Refinery::WordPress::Attachment) }
   end
 end
