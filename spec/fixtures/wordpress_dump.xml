@@ -16,7 +16,7 @@
 <!-- 7. WordPress will then import each of the posts, pages, comments, categories, etc. -->
 <!--    contained in this file into your site. -->
 
-<!-- generator="WordPress/3.1.2" created="2011-05-21 12:27" -->
+<!-- generator="WordPress/3.1.2" created="2011-06-05 15:27" -->
 <rss version="2.0"
 	xmlns:excerpt="http://wordpress.org/export/1.1/excerpt/"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
@@ -29,7 +29,7 @@
 	<title>My test blog</title>
 	<link>http://localhost/wordpress</link>
 	<description>Just another WordPress site</description>
-	<pubDate>Sat, 21 May 2011 12:27:19 +0000</pubDate>
+	<pubDate>Sun, 05 Jun 2011 15:27:27 +0000</pubDate>
 	<language>en</language>
 	<wp:wxr_version>1.1</wp:wxr_version>
 	<wp:base_site_url>http://localhost/wordpress</wp:base_site_url>
@@ -161,6 +161,8 @@ In hac  habitasse platea dictumst. Nunc quis tortor sed libero hendrerit  dapibu
 
 Integer interdum purus id erat. Duis nec velit vitae dolor mattis  euismod. Class aptent taciti sociosqu ad litora torquent per conubia  nostra, per inceptos himenaeos. Suspendisse pellentesque dignissim  lacus.
 
+<a href="http://localhost/wordpress/wp-content/uploads/2011/05/200px-Tux.svg_.png"><img class="alignnone size-full wp-image-13" title="200px-Tux.svg" src="http://localhost/wordpress/wp-content/uploads/2011/05/200px-Tux.svg_.png" alt="" width="200" height="235" /></a>
+
 Nulla semper euismod arcu. Suspendisse egestas, erat a  consectetur dapibus, felis orci cursus eros, et sollicitudin purus urna  et metus. Integer eget est sed nunc euismod vestibulum. Integer nulla  dui, tristique in, euismod et, interdum imperdiet, enim. Mauris at  lectus. Sed egestas tortor nec mi.]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<wp:post_id>6</wp:post_id>
@@ -182,12 +184,12 @@ Nulla semper euismod arcu. Suspendisse egestas, erat a  consectetur dapibus, fel
 		<wp:postmeta>
 			<wp:meta_key>_edit_last</wp:meta_key>
 			<wp:meta_value><![CDATA[1]]></wp:meta_value>
-    </wp:postmeta>
+		</wp:postmeta>
 		<wp:comment>
 			<wp:comment_id>2</wp:comment_id>
 			<wp:comment_author><![CDATA[admin]]></wp:comment_author>
 			<wp:comment_author_email>admin@example.com</wp:comment_author_email>
-			<wp:comment_author_url></wp:comment_author_url>
+			<wp:comment_author_url>http://www.example.com/</wp:comment_author_url>
 			<wp:comment_author_IP>127.0.0.1</wp:comment_author_IP>
 			<wp:comment_date>2011-05-21 12:26:24</wp:comment_date>
 			<wp:comment_date_gmt>2011-05-21 12:26:24</wp:comment_date_gmt>
@@ -201,7 +203,7 @@ Nulla semper euismod arcu. Suspendisse egestas, erat a  consectetur dapibus, fel
 			<wp:comment_id>3</wp:comment_id>
 			<wp:comment_author><![CDATA[admin]]></wp:comment_author>
 			<wp:comment_author_email>admin@example.com</wp:comment_author_email>
-      <wp:comment_author_url>http://www.example.com/</wp:comment_author_url>
+			<wp:comment_author_url>http://www.example.com/</wp:comment_author_url>
 			<wp:comment_author_IP>127.0.0.1</wp:comment_author_IP>
 			<wp:comment_date>2011-05-21 12:26:30</wp:comment_date>
 			<wp:comment_date_gmt>2011-05-21 12:26:30</wp:comment_date_gmt>
@@ -276,6 +278,37 @@ Class aptent taciti sociosqu ad litora torquent per conubia  nostra, per incepto
 		<wp:postmeta>
 			<wp:meta_key>_wp_page_template</wp:meta_key>
 			<wp:meta_value><![CDATA[default]]></wp:meta_value>
+		</wp:postmeta>
+	</item>
+	<item>
+		<title>200px-Tux.svg</title>
+		<link>http://localhost/wordpress/?attachment_id=13</link>
+		<pubDate>Sun, 05 Jun 2011 15:26:51 +0000</pubDate>
+		<dc:creator>admin</dc:creator>
+		<guid isPermaLink="false">http://localhost/wordpress/wp-content/uploads/2011/05/200px-Tux.svg_.png</guid>
+		<description>Tux, the Linux mascot</description>
+		<content:encoded><![CDATA[]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>13</wp:post_id>
+		<wp:post_date>2011-06-05 15:26:51</wp:post_date>
+		<wp:post_date_gmt>2011-06-05 15:26:51</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>200px-tux-svg</wp:post_name>
+		<wp:status>inherit</wp:status>
+		<wp:post_parent>6</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type>attachment</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<wp:attachment_url>http://localhost/wordpress/wp-content/uploads/2011/05/200px-Tux.svg_.png</wp:attachment_url>
+		<wp:postmeta>
+			<wp:meta_key>_wp_attached_file</wp:meta_key>
+			<wp:meta_value><![CDATA[2011/05/200px-Tux.svg_.png]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_wp_attachment_metadata</wp:meta_key>
+			<wp:meta_value><![CDATA[a:6:{s:5:"width";s:3:"200";s:6:"height";s:3:"235";s:14:"hwstring_small";s:22:"height='96' width='81'";s:4:"file";s:26:"2011/05/200px-Tux.svg_.png";s:5:"sizes";a:2:{s:9:"thumbnail";a:3:{s:4:"file";s:26:"200px-Tux.svg_-150x150.png";s:5:"width";s:3:"150";s:6:"height";s:3:"150";}s:14:"post-thumbnail";a:3:{s:4:"file";s:26:"200px-Tux.svg_-200x198.png";s:5:"width";s:3:"200";s:6:"height";s:3:"198";}}s:10:"image_meta";a:10:{s:8:"aperture";s:1:"0";s:6:"credit";s:0:"";s:6:"camera";s:0:"";s:7:"caption";s:0:"";s:17:"created_timestamp";s:1:"0";s:9:"copyright";s:0:"";s:12:"focal_length";s:1:"0";s:3:"iso";s:1:"0";s:13:"shutter_speed";s:1:"0";s:5:"title";s:0:"";}}]]></wp:meta_value>
 		</wp:postmeta>
 	</item>
 </channel>

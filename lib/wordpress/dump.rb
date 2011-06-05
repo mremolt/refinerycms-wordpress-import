@@ -47,6 +47,12 @@ module Refinery
           Category.new(category.text)
         end
       end
+
+      def attachments
+        doc.xpath("//item[wp:post_type = 'attachment']").collect do |attachment|
+          Attachment.new(attachment)
+        end
+      end
     end
   end
 end

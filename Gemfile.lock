@@ -1,7 +1,7 @@
 PATH
   remote: ./
   specs:
-    refinerycms-wordpress-import (0.1.0)
+    refinerycms-wordpress-import (0.2.0)
       bundler (~> 1.0)
       nokogiri (~> 1.4.4)
       refinerycms (~> 1.0.0)

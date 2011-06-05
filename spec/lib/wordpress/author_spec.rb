@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Refinery::WordPress::Author, :type => :model do
   let(:author) { test_dump.authors.first }
 
-  it { author.login.should == 'admin' }
-  it { author.email.should == 'admin@example.com' }
+  specify { author.login.should == 'admin' }
+  specify { author.email.should == 'admin@example.com' }
 
   describe "#to_refinery" do
     before do 

@@ -66,4 +66,10 @@ describe Refinery::WordPress::Dump, :type => :model do
       dump.posts(true).should have(2).posts
     end
   end
+
+  describe "#attachments" do
+    it "should return all attachments" do
+      dump.attachments.should have(1).attachment
+    end
+  end
 end
