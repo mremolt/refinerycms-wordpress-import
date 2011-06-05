@@ -23,22 +23,10 @@ module Refinery
       end
 
       def content_formatted
-        # WordPress doesn't export <p>-Tags, so let's run a simple_format over
-        # the content. As we trust ourselves, no sanatize.
-        formatted = simple_format(content)
-
-        # Support for SyntaxHighlighter (http://alexgorbatchev.com/SyntaxHighlighter/):
-        # In WordPress you can (via a plugin) enclose code in [lang][/lang]
-        # blocks, which are converted to a <pre>-tag with a class corresponding
-        # to the language.
-        # 
-        # Example:
-        # [ruby]p "Hello World"[/ruby] 
-        # -> <pre class="brush: ruby">p "Hello world"</pre> 
-        formatted.gsub!(/\[(\w+)\](.+?)\[\/\1\]/m, '<pre class="brush: \1">\2</pre>')
+        formatted = format_syntax_highlighter(format_paragraphs(content))
 
         # remove all tags inside <pre> that simple_format created
-        # TODO: replace simple_format with a method, that ignores pre-tags
+        # TODO: replace format_paragraphs with a method, that ignores pre-tags
         formatted.gsub!(/(<pre.*?>)(.+?)(<\/pre>)/m) do |match| 
           "#{$1}#{strip_tags($2)}#{$3}"
         end
@@ -89,7 +77,10 @@ module Refinery
 
       private 
 
-      def simple_format(text, html_options={})
+      def format_paragraphs(text, html_options={})
+        # WordPress doesn't export <p>-Tags, so let's run a simple_format over
+        # the content. As we trust ourselves, no sanatize. This code is heavily
+        # inspired by the simple_format rails helper
         text = ''.html_safe if text.nil?
         start_tag = tag('p', html_options, true)
         
@@ -98,6 +89,18 @@ module Refinery
         text.insert 0, start_tag
 
         text.html_safe.safe_concat("</p>")
+      end
+
+      def format_syntax_highlighter(text)
+        # Support for SyntaxHighlighter (http://alexgorbatchev.com/SyntaxHighlighter/):
+        # In WordPress you can (via a plugin) enclose code in [lang][/lang]
+        # blocks, which are converted to a <pre>-tag with a class corresponding
+        # to the language.
+        # 
+        # Example:
+        # [ruby]p "Hello World"[/ruby] 
+        # -> <pre class="brush: ruby">p "Hello world"</pre> 
+        text.gsub(/\[(\w+)\](.+?)\[\/\1\]/m, '<pre class="brush: \1">\2</pre>')
       end
     end
   end

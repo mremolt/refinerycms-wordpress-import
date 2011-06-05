@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Refinery::WordPress::Post, :type => :model do
-  let(:post) { test_dump.posts.last  }
+  let(:post) { test_dump.posts.last }
 
   it { post.title.should == 'Third blog post' }
   it { post.content.should include('Lorem ipsum dolor sit') }

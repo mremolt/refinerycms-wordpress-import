@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 describe Refinery::WordPress::Dump, :type => :model do
-  let(:file_name) { File.realpath(File.join(File.dirname(__FILE__), '../../fixtures/wordpress_dump.xml')) }
-  let(:dump) { Refinery::WordPress::Dump.new(file_name) }
+  let(:dump) { test_dump }
 
   it "should create a Dump object given a xml file" do
     dump.should be_a Refinery::WordPress::Dump
@@ -46,6 +45,10 @@ describe Refinery::WordPress::Dump, :type => :model do
     it "should return all included pages" do
       dump.pages.should have(3).pages
     end
+
+    it "should return only published pages with only_published=true" do
+      dump.pages(true).should have(2).pages
+    end
   end
 
   describe "#authors" do
@@ -57,6 +60,10 @@ describe Refinery::WordPress::Dump, :type => :model do
   describe "#posts" do
     it "should return all posts" do
       dump.posts.should have(3).posts
+    end
+
+    it "should return only published posts with only_published=true" do
+      dump.posts(true).should have(2).posts
     end
   end
 end
