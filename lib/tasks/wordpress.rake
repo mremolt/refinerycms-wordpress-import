@@ -19,6 +19,7 @@ namespace :wordpress do
     dump = Refinery::WordPress::Dump.new(params[:file_name])
 
     dump.authors.each(&:to_refinery)
+    attachments = dump.attachments.each(&:to_refinery)
     
     only_published = ENV['ONLY_PUBLISHED'] == 'true' ? true : false
     dump.posts(only_published).each(&:to_refinery)
@@ -28,6 +29,12 @@ namespace :wordpress do
     ENV["MODEL"] = 'BlogPost'
     Rake::Task["friendly_id:redo_slugs"].invoke
     ENV.delete("MODEL")
+
+    # parse all created BlogPosts bodys and replace the old wordpress image uls 
+    # with the newly created ones
+    attachments.each do |attachment|
+      attachment.replace_image_url_in_blog_posts
+    end
   end
 
   desc "reset blog tables and then import blog data from a Refinery::WordPress XML dump"
