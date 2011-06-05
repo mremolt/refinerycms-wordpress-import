@@ -2,15 +2,23 @@
 
 This litte project is an importer for WordPress XML dumps into refinerycms(-blog). 
 
-So far, only blog-relevant data gets imported, I'm working on the cms pages part. 
-
 You can find the source code on github: https://github.com/mremolt/refinerycms-wordpress-import
+
+Keep in mind, this gem imports blog posts and pages, NOT the media files, as they are not
+part of the XML dump! You have to manually readd them to Refinery. 
+
+The same goes for links to other pages on your site. WordPress exports them just as <a>-Tags. 
+If your site (blog) structure uses new urls, the links WILL break! For example, if you used 
+the popular WP blog url structure "YYYY-MM/slug", be warned that Refinery just uses "blog/slug". 
+So your inner site links will point to the old WP url. 
+
 
 == Prerequisites
 
 As refinerycms-wordpress-import is an addon for RefineryCMS, is shares the prerequisites with it.
 So you'll first need a running installation of refinerycms and refinerycms-blog. Make sure
 the site is running, all migrations are run and you created the first refinery user. 
+
 
 == Installation
 
@@ -26,9 +34,10 @@ and run
 
   bundle
 
+
 == Usage
 
-Importing the XML dump is done via 3 rake tasks:
+Importing the XML dump is done via rake tasks:
 
   rake wordpress:reset_blog 
 
@@ -53,6 +62,31 @@ The task will then skip all posts that are not published.
 
 This one combines the two previous tasks. 
 
+If you also want to import the cms part of WordPress, three more rake tasks manage
+the import into RefineryCMS Pages:
+
+  rake wordpress:reset_pages
+
+This task deletes all data from the cms tables, ensuring a clean import. Otherwise existing 
+pages could break the import because of duplicate IDs. 
+
+  rake wordpress:import_pages[file_name] 
+
+This task imports all the WordPress pages into Refinery. The page structure (parent - child)
+is preserved. 
+
+If you want to skip the draft pages, add the ONLY_PUBLISHED parameter to this task, 
+just like with wordpress:import_blog.
+
+  rake wordpress:import_pages[file_name] ONLY_PUBLISHED=true
+
+If you want to clean the tables and import in one task:
+
+  rake wordpress:reset_and_import_pages[file_name]
+
+
+== Usage on ZSH
+
 One more hint for users of zsh (like myself): 
 
 The square brackets following the rake task need to be escaped on zsh, as they have a 
@@ -61,6 +95,7 @@ special meaning there. So the syntax is:
   rake wordpress:reset_and_import_blog\[file_name\]
 
 Ugly, but it works. This is the case for all rake tasks by the way, not just mine. 
+
 
 == Feedback
 
