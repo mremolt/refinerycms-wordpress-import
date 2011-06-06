@@ -77,7 +77,7 @@ describe Refinery::WordPress::Dump, :type => :model do
 
   describe "#attachments" do
     it "should return all attachments" do
-      dump.attachments.should have(1).attachment
+      dump.attachments.should have(2).attachments
     end
 
     specify { dump.attachments.first.should be_a(Refinery::WordPress::Attachment) }
