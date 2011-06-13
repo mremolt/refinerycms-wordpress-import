@@ -90,7 +90,7 @@ Finally, if you want to reset and import all data including media (see below):
 
 The WP XML dump contains absolute links to media files linked inside posts, like:
 
-http://www.mysite.com/wordpress/wp-content/uploads/2011/05/cv.txt
+www.mysite.com/wordpress/wp-content/uploads/2011/05/cv.txt
 
 The dump does NOT contain the files itself! To get them imported, this gem downloads the files 
 from the given URL and imports them to refinery. So for a working media import the old site with
