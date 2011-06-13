@@ -16,7 +16,7 @@
 <!-- 7. WordPress will then import each of the posts, pages, comments, categories, etc. -->
 <!--    contained in this file into your site. -->
 
-<!-- generator="WordPress/3.1.2" created="2011-06-06 17:36" -->
+<!-- generator="WordPress/3.1.2" created="2011-06-06 18:42" -->
 <rss version="2.0"
 	xmlns:excerpt="http://wordpress.org/export/1.1/excerpt/"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
@@ -29,7 +29,7 @@
 	<title>My test blog</title>
 	<link>http://localhost/wordpress</link>
 	<description>Just another WordPress site</description>
-	<pubDate>Mon, 06 Jun 2011 17:36:50 +0000</pubDate>
+	<pubDate>Mon, 06 Jun 2011 18:42:09 +0000</pubDate>
 	<language>en</language>
 	<wp:wxr_version>1.1</wp:wxr_version>
 	<wp:base_site_url>http://localhost/wordpress</wp:base_site_url>
@@ -162,6 +162,8 @@ In hac  habitasse platea dictumst. Nunc quis tortor sed libero hendrerit  dapibu
 		<guid isPermaLink="false">http://localhost/wordpress/?p=6</guid>
 		<description></description>
 		<content:encoded><![CDATA[This is just a standard text page example. Lorem ipsum dolor sit amet,  consectetur adipiscing elit. Proin metus dolor, hendrerit sit amet,  aliquet nec, posuere sed, purus. Nullam et velit iaculis odio sagittis  placerat. Duis metus tellus, pellentesque ut, luctus id, egestas a,  lorem. Praesent vitae mauris. Aliquam sed nulla. Sed id nunc vitae leo  suscipit viverra. Proin at leo ut lacus consequat rhoncus. In hac  habitasse platea dictumst. Nunc quis tortor sed libero hendrerit  dapibus.
+
+<a href="http://localhost/wordpress/wp-content/uploads/2011/05/200px-Tux.svg_.png"><img class="alignnone size-thumbnail wp-image-13" title="200px-Tux.svg" src="http://localhost/wordpress/wp-content/uploads/2011/05/200px-Tux.svg_-150x150.png" alt="Tux, the Linux mascot" width="150" height="150" /></a>
 
 Integer interdum purus id erat. Duis nec velit vitae dolor mattis  euismod. Class aptent taciti sociosqu ad litora torquent per conubia  nostra, per inceptos himenaeos. Suspendisse pellentesque dignissim  lacus.
 

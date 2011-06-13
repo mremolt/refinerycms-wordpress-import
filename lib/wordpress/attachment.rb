@@ -43,7 +43,12 @@ module Refinery
       def replace_image_url_in_blog_posts
         ::BlogPost.all.each do |post|
           if post.body.include? url
-            post.body = post.body.gsub(url, refinery_image.image.url)
+            url_parts = url.split('.')
+            extension = url_parts.pop
+            url_without_extension = url_parts.join('.')
+            pattern = /#{url_without_extension}(-\d+x\d+)?\.#{extension}/
+
+            post.body = post.body.gsub(pattern, refinery_image.image.url)
             post.save!
           end
         end

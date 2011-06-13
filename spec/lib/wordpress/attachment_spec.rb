@@ -28,6 +28,8 @@ describe Refinery::WordPress::Attachment, :type => :model do
     end
 
     describe "#replace_image_url" do
+      let(:post) { BlogPost.first }
+
       before do
         test_dump.authors.each(&:to_refinery)
         test_dump.posts.each(&:to_refinery)
@@ -36,10 +38,14 @@ describe Refinery::WordPress::Attachment, :type => :model do
         attachment.replace_image_url_in_blog_posts
       end
 
+      specify { post.body.should_not include attachment.url }
+      specify { post.body.should_not include '200px-Tux.svg_-150x150.png' }
+      specify { post.body.should_not include 'wp-content' }
+
       it "should replace attachment urls in the generated BlogPosts" do
-        BlogPost.first.body.should_not include(attachment.url)
-        BlogPost.first.body.should include(@image.image.url)
+        post.body.should include(@image.image.url)
       end
+
 
     end
   end
@@ -52,5 +58,11 @@ describe Refinery::WordPress::Attachment, :type => :model do
     specify { attachment.file_name.should == 'cv.txt' }
     specify { attachment.post_date.should == DateTime.new(2011, 6, 6, 17, 27, 50) }
     specify { attachment.should_not be_an_image }
+
+    describe '#to_refinery' do
+      it "should raise an exception for now" do
+        lambda { attachment.to_refinery }.should raise_error
+      end
+    end
   end
 end
