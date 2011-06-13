@@ -27,15 +27,16 @@ describe Refinery::WordPress::Attachment, :type => :model do
       end
     end
 
-    describe "#replace_image_url" do
+    describe "#replace_url" do
       let(:post) { BlogPost.first }
 
       before do
         test_dump.authors.each(&:to_refinery)
         test_dump.posts.each(&:to_refinery)
+
         @image = attachment.to_refinery
 
-        attachment.replace_image_url_in_blog_posts
+        attachment.replace_url
       end
 
       specify { post.body.should_not include attachment.url }
@@ -45,8 +46,6 @@ describe Refinery::WordPress::Attachment, :type => :model do
       it "should replace attachment urls in the generated BlogPosts" do
         post.body.should include(@image.image.url)
       end
-
-
     end
   end
 
@@ -60,8 +59,34 @@ describe Refinery::WordPress::Attachment, :type => :model do
     specify { attachment.should_not be_an_image }
 
     describe '#to_refinery' do
-      it "should raise an exception for now" do
-        lambda { attachment.to_refinery }.should raise_error
+      before do 
+        @resource = attachment.to_refinery
+      end
+
+      specify { Resource.should have(1).record }
+      specify { @resource.should be_a(Resource) }
+
+      it "should copy the attributes from Attachment" do
+        @resource.created_at.should == attachment.post_date
+        @resource.file.url.end_with?(attachment.file_name).should be_true
+      end
+
+    end
+
+    describe '#replace_resource_url' do
+      let(:page_part) { Page.last.parts.first }
+
+      before do
+        test_dump.pages.each(&:to_refinery)
+        @resource = attachment.to_refinery
+        attachment.replace_url
+      end
+
+      specify { page_part.body.should_not include attachment.url }
+      specify { page_part.body.should_not include 'wp-content' }
+
+      it "should replace attachment urls in the generated BlogPosts" do
+        page_part.body.should include(@resource.file.url)
       end
     end
   end

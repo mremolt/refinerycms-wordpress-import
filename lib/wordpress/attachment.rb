@@ -3,6 +3,7 @@ module Refinery
     class Attachment
       attr_reader :node
       attr_reader :refinery_image
+      attr_reader :refinery_resource
 
       def initialize(node)
         @node = node
@@ -28,6 +29,14 @@ module Refinery
         node.xpath("wp:attachment_url").text
       end
 
+      def url_pattern
+        url_parts = url.split('.')
+        extension = url_parts.pop
+        url_without_extension = url_parts.join('.')
+
+        /#{url_without_extension}(-\d+x\d+)?\.#{extension}/
+      end
+
       def image?
         url.match /\.(png|jpg|jpeg|gif)$/ 
       end
@@ -36,21 +45,15 @@ module Refinery
         if image?
           to_image
         else
-          to_file
+          to_resource
         end
       end
 
-      def replace_image_url_in_blog_posts
-        ::BlogPost.all.each do |post|
-          if post.body.include? url
-            url_parts = url.split('.')
-            extension = url_parts.pop
-            url_without_extension = url_parts.join('.')
-            pattern = /#{url_without_extension}(-\d+x\d+)?\.#{extension}/
-
-            post.body = post.body.gsub(pattern, refinery_image.image.url)
-            post.save!
-          end
+      def replace_url
+        if image?
+          replace_image_url
+        else
+          replace_resource_url
         end
       end
 
@@ -66,8 +69,60 @@ module Refinery
         image
       end
 
-      def to_file
-        raise "to_file is not implemented yet, sorry!"
+      def to_resource
+        resource = ::Resource.new
+        resource.created_at = post_date
+        resource.file_url = url
+        resource.save!
+
+        @refinery_resource = resource
+        resource
+      end
+
+      def replace_image_url
+        replace_image_url_in_blog_posts
+        replace_image_url_in_pages
+      end
+
+      def replace_resource_url
+        replace_resource_url_in_blog_posts
+        replace_resource_url_in_pages
+      end
+
+      def replace_image_url_in_blog_posts
+        replace_url_in_blog_posts(refinery_image.image.url)
+      end
+      
+      def replace_image_url_in_pages
+        replace_url_in_pages(refinery_image.image.url)
+      end
+
+      def replace_resource_url_in_blog_posts
+        replace_url_in_blog_posts(refinery_resource.file.url)
+      end
+      
+      def replace_resource_url_in_pages
+        replace_url_in_pages(refinery_resource.file.url)
+      end
+
+      def replace_url_in_blog_posts(new_url)
+        ::BlogPost.all.each do |post|
+          if (! post.body.empty?) && post.body.include?(url)
+            post.body = post.body.gsub(url_pattern, new_url)
+            post.save!
+          end
+        end
+      end
+
+      def replace_url_in_pages(new_url)
+        ::Page.all.each do |page|
+          page.parts.each do |part|
+            if (! part.body.to_s.blank?) && part.body.include?(url)
+              part.body = part.body.gsub(url_pattern, new_url)
+              part.save!
+            end
+          end
+        end
       end
 
     end
