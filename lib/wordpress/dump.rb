@@ -4,7 +4,7 @@ module Refinery
       attr_reader :doc
 
       def initialize(file_name)
-        file_name = File.absolute_path(file_name)
+        file_name = File.expand_path(file_name)
 
         raise "Given file '#{file_name}' no file or not readable." \
           unless File.file?(file_name) && File.readable?(file_name)
