@@ -63,6 +63,7 @@ describe Refinery::WordPress::Post, :type => :model do
           @comment.body.should == comment.content
           @comment.state.should == 'approved'
           @comment.created_at.should == comment.date
+          @comment.created_at.should == comment.date
         end
       end
     end
@@ -79,16 +80,13 @@ describe Refinery::WordPress::Post, :type => :model do
         @post = post.to_refinery
       end
 
-       specify { BlogPost.should have(1).record } 
+      specify { BlogPost.should have(1).record }
 
-      it "should copy the attributes from Refinery::WordPress::Post" do
-        @post.title.should == post.title
-        @post.body.should == post.content_formatted
-        @post.draft.should == post.draft?
-        @post.published_at.should == post.post_date
-        @post.created_at.should == post.post_date
-        @post.author.username.should == post.creator
-      end
+      specify { @post.title.should == post.title }
+      specify { @post.body.should == post.content_formatted }
+      specify { @post.draft.should == post.draft? }
+      specify { @post.published_at.should == post.post_date }
+      specify { @post.author.username.should == post.creator }
 
       it "should assign a category for each Refinery::WordPress::Category" do
         @post.categories.should have(post.categories.count).records

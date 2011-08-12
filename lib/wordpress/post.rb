@@ -34,11 +34,11 @@ module Refinery
         user = ::User.find_by_username(creator) || ::User.first
         raise "Referenced User doesn't exist! Make sure the authors are imported first." \
           unless user
-        
+
         begin
-          post = ::BlogPost.new :title => title, :body => content_formatted, 
-            :draft => draft?, :published_at => post_date, :created_at => post_date, 
-            :author => user, :tag_list => tag_list
+          post = ::BlogPost.new :title => title, :body => content_formatted,
+            :draft => draft?, :published_at => post_date, :created_at => post_date,
+            :user_id => user.id, :tag_list => tag_list
           post.save!
 
           ::BlogPost.transaction do
@@ -52,7 +52,7 @@ module Refinery
               comment.save
             end
           end
-        rescue ActiveRecord::RecordInvalid 
+        rescue ActiveRecord::RecordInvalid
           # if the title has already been taken (WP allows duplicates here,
           # refinery doesn't) append the post_id to it, making it unique
           post.title = "#{title}-#{post_id}"
