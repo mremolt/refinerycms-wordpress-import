@@ -1,6 +1,3 @@
-require 'yaml'
-YAML::ENGINE.yamler= 'syck'
-
 require 'rubygems'
 gemfile = File.expand_path('../../../../Gemfile', __FILE__)
 
